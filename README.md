@@ -56,7 +56,7 @@ For your existing project, run the following command to install the packages:
 - `decimal.js`: The package to handle decimal numbers.
 
 ```shell
-npm install typeorm mysql2 --save
+npm install typeorm mysql2 dotenv decimal.js --save
 ```
 
 - `@types/node`: The package to provide TypeScript type definitions for Node.js.
@@ -64,7 +64,7 @@ npm install typeorm mysql2 --save
 - `typescript`: The package to compile TypeScript code to JavaScript.
 
 ```shell
-npm install @types/node  --save-dev
+npm install @types/node ts-node typescript --save-dev
 ```
 
 </details>
@@ -172,11 +172,33 @@ You can obtain the database connection parameters on [TiDB Cloud's Web Console](
 
 ### Step 4. Create the database schema
 
-Run following command to invoke TypeORM CLI] to initialize the database with the migration files in the [`src/migrations`](src/migrations) folder:
+Run following command to invoke TypeORM CLI] to initialize the database with the SQL statements written in the [migration files](src/migrations):
 
 ```shell
 npm run migration:run
 ```
+
+<details>
+    <summary><b>Expected execution output:</b></summary>
+
+    ```
+    query: SELECT VERSION() AS `version`
+    query: SELECT * FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'test' AND `TABLE_NAME` = 'migrations'
+    query: CREATE TABLE `migrations` (`id` int NOT NULL AUTO_INCREMENT, `timestamp` bigint NOT NULL, `name` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB
+    query: SELECT * FROM `test`.`migrations` `migrations` ORDER BY `id` DESC
+    0 migrations are already loaded in the database.
+    1 migrations were found in the source code.
+    1 migrations are new migrations must be executed.
+    query: START TRANSACTION
+    query: CREATE TABLE `profiles` (`player_id` int NOT NULL, `biography` text NOT NULL, PRIMARY KEY (`player_id`)) ENGINE=InnoDB
+    query: CREATE TABLE `players` (`id` int NOT NULL AUTO_INCREMENT, `name` varchar(50) NOT NULL, `coins` decimal NOT NULL, `goods` int NOT NULL, `created_at` datetime NOT NULL, `profilePlayerId` int NULL, UNIQUE INDEX `uk_players_on_name` (`name`), UNIQUE INDEX `REL_b9666644b90ccc5065993425ef` (`profilePlayerId`), PRIMARY KEY (`id`)) ENGINE=InnoDB
+    query: ALTER TABLE `players` ADD CONSTRAINT `fk_profiles_on_player_id` FOREIGN KEY (`profilePlayerId`) REFERENCES `profiles`(`player_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    query: INSERT INTO `test`.`migrations`(`timestamp`, `name`) VALUES (?, ?) -- PARAMETERS: [1693814724825,"Init1693814724825"]
+    Migration Init1693814724825 has been  executed successfully.
+    query: COMMIT
+    ```
+
+</details>
 
 The migration files are generated based on the entities defined in [`src/entities`](src/entities) folder. To learn how to define entities in TypeORM, please check the [Entities](https://typeorm.io/entities) documentation.
 
