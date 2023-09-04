@@ -256,7 +256,9 @@ export const AppDataSource = new DataSource({
 
 > **Note**
 >
-> For TiDB Serverless, TLS connection **MUST** be enabled via `TIDB_ENABLE_SSL` when using public endpoint, but you **don't** have to specify an SSL CA certificate via `TIDB_CA_PATH`, because Node.js uses the built-in [Mozilla CA certificate](https://wiki.mozilla.org/CA/Included_Certificates) by default, which is trusted by TiDB Serverless.
+> For TiDB Serverless, you MUST enable TLS connection when using public endpoint. In this sample code, please set up the environment variable `TIDB_ENABLE_SSL` in the `.env` file to `true`.
+> 
+> However, you **don't** have to specify an SSL CA certificate via `TIDB_CA_PATH`, because Node.js uses the built-in [Mozilla CA certificate](https://wiki.mozilla.org/CA/Included_Certificates) by default, which is trusted by TiDB Serverless.
 
 ### Insert data
 
