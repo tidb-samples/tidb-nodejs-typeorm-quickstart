@@ -1,16 +1,15 @@
-import {Entity, Column, PrimaryColumn} from "typeorm"
+import {Entity, Column, PrimaryGeneratedColumn} from "typeorm"
 
 @Entity({name: "profiles"})
 export class Profile {
 
-    @PrimaryColumn({name: "player_id"})
-    playerId: number
+    @PrimaryGeneratedColumn()
+    id: number
 
     @Column("text")
     biography: string
 
-    constructor(playerId: number, biography: string) {
-        this.playerId = playerId;
+    constructor(biography: string) {
         this.biography = biography;
     }
 

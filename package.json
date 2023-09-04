@@ -6,7 +6,8 @@
    "type": "commonjs",
    "scripts": {
       "start": "ts-node src/index.ts",
-      "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts"
+      "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts",
+      "migration:init": "npx typeorm-ts-node-commonjs migration:generate ./src/migrations/init -d ./src/data-source.ts"
    },
    "keywords": [
       "tidb",

@@ -22,9 +22,9 @@ export class Player {
     @Column({name: "created_at", type: "datetime"})
     createdAt: Date
 
-    @OneToOne(() => Profile, {cascade: true})
-    @JoinColumn({ name: "profile_id", foreignKeyConstraintName: "fk_profiles_on_player_id" })
-    profile: Profile | undefined
+    @OneToOne(() => Profile)
+    @JoinColumn( {name: "profile_id", foreignKeyConstraintName: "fk_players_on_profile_id" })
+    profile: Profile | null
 
     constructor(name: string, coins: Decimal, goods: number) {
         this.name = name;
