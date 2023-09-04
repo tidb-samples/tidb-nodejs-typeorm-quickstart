@@ -1,4 +1,4 @@
-# Connecting to TiDB with ORM framework TypeORM
+# Connect to TiDB with ORM framework TypeORM
 
 [![Language](https://img.shields.io/badge/Language-TypeScript-3178c6.svg)](https://nodejs.org/en)
 [![Driver](https://img.shields.io/badge/ORM-TypeORM-fe0902.svg)](https://typeorm.io/)
