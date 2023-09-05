@@ -322,7 +322,26 @@ For more information, refer to the documentation of TypeORM [DataSource API](htt
 
 ## Best practices
 
-TODO
+### Foreign key constraint
+
+Using foreign key constraints can add checks on the database side to ensure the [referential integrity](https://en.wikipedia.org/wiki/Referential_integrity) of data, but they might lead to serious performance issues when there is a large amount of data.
+
+You can control whether foreign key constraints are created when constructing relationships between entities by using the `createForeignKeyConstraints` option (default `true`).
+
+```typescript
+@Entity()
+export class ActionLog {
+    @PrimaryColumn()
+    id: number
+
+    @ManyToOne((type) => Person, {
+        createForeignKeyConstraints: false,
+    })
+    person: Person
+}
+```
+
+For more information, refer to the [TypeORM FAQ](https://typeorm.io/relations-faq#avoid-foreign-key-constraint-creation) and [FOREIGN KEY constraints](https://docs.pingcap.com/tidbcloud/foreign-key#foreign-key-constraints).
 
 ## What's next
 
